@@ -91,3 +91,12 @@ The magic of `mmtable2` is that it actually uses another awesome package called 
 So, if we know how to use gt, we can customize our basic table!
 
 Let’s give it a go by adding some gt headers, which give the table a title and subtitle.
+
+```{r}
+main_table %>% 
+  gt::tab_header(
+    title = "Fuel economy by Car Manufacturer",
+    subtitle = "Audi, VW and Honda are the leaders in fuel economy"
+  )
+```
+
