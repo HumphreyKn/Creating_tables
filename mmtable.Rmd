@@ -2,8 +2,8 @@
 title: "CREATING TABLES USING `mmtable2` PACKAGE"
 author: "HUMPHREY KINOTI"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r include=FALSE}
