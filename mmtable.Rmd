@@ -42,6 +42,19 @@ Our next step is to use `dplyr` and `tidyr` to get the data into the right forma
 - `ungroup()`: Ungrouping is needed to remove any leftover groups.
 - `pivot_longer()`: Used to convert from a “wide” to a “long” data frame, which stacks the City and Highway average fuel economy on top of each other. If you’re familiar with ggplot2 the “long” format is critical to plotting.
 
+```{r}
+clean_data <- mpg %>% 
+  group_by(manufacturer, cyl) %>% 
+  summarise(across(.cols = c(cty,hwy), .fns = mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = c(cty,hwy),
+    names_to = "fuel_economy_type",
+    values_to = "fuel_economy"
+  );clean_data
+
+```
+
 ## Step 3: Make the basic table
 With the mpg data summarized and in the long format, we can now use `mmtable2` to make a table, just like we would use `ggplot2` to make a plot. We perform 3 actions:
 
