@@ -44,9 +44,10 @@ Our next step is to use `dplyr` and `tidyr` to get the data into the right forma
 
 ```{r}
 clean_data <- mpg %>% 
-  group_by(manufacturer, cyl) %>% 
-  summarise(across(.cols = c(cty,hwy), .fns = mean)) %>% 
-  ungroup() %>% 
+  group_by(manufacturer, cyl) %>% #grouping
+  summarise(across(.cols = c(cty,hwy), .fns = mean)) %>% #summarising
+  ungroup() %>% #ungrouping
+  #pivot longer
   pivot_longer(
     cols = c(cty,hwy),
     names_to = "fuel_economy_type",
@@ -63,16 +64,17 @@ With the mpg data summarized and in the long format, we can now use `mmtable2` t
 3. Format the header and table cells: This adds the lines that help to differentiate groups in our data.
 
 ```{r}
+# Setting up the mmtable()
 main_table <- clean_data %>% 
   mutate(fuel_economy= round(fuel_economy, 1)) %>% 
   mmtable(cells = fuel_economy, table_name = "Fuel Economy")+
   
-  #specify headers
+  #specify headers(Specifying the header location)
   header_top(manufacturer)+
   header_left(cyl)+
   header_left_top(fuel_economy_type)+
   
-  #Specify formats
+  #Specify formats (Format the header & table cells)
   header_format(manufacturer, list(cell_text(transform = "capitalize")))+
   header_format(fuel_economy_type, list(cell_text(transform = "uppercase")))+
   table_format(
@@ -85,7 +87,7 @@ main_table <- clean_data %>%
   );main_table
 ```
 
-### BONUS: Customize the table with `gt`
+### You Customize the table with `gt`
 The magic of `mmtable2` is that it actually uses another awesome package called `gt`, which is what allows `mmtable2` to produce awesome-looking tables.
 
 So, if we know how to use gt, we can customize our basic table!
@@ -100,3 +102,4 @@ main_table %>%
   )
 ```
 
+\newpage
