@@ -62,6 +62,29 @@ With the mpg data summarized and in the long format, we can now use `mmtable2` t
 2. Specify the headers locations: This tells the location for each header needed to organize the table.
 3. Format the header and table cells: This adds the lines that help to differentiate groups in our data.
 
+```{r}
+main_table <- clean_data %>% 
+  mutate(fuel_economy= round(fuel_economy, 1)) %>% 
+  mmtable(cells = fuel_economy, table_name = "Fuel Economy")+
+  
+  #specify headers
+  header_top(manufacturer)+
+  header_left(cyl)+
+  header_left_top(fuel_economy_type)+
+  
+  #Specify formats
+  header_format(manufacturer, list(cell_text(transform = "capitalize")))+
+  header_format(fuel_economy_type, list(cell_text(transform = "uppercase")))+
+  table_format(
+    locations = list(
+      cells_body(rows = c(2,6))
+    ),
+    style= list(
+      cell_borders(sides = "top",color = "grey")
+    )
+  );main_table
+```
+
 ### BONUS: Customize the table with `gt`
 The magic of `mmtable2` is that it actually uses another awesome package called `gt`, which is what allows `mmtable2` to produce awesome-looking tables.
 
